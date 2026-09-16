@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <meta content="width=device-width" name="viewport">
+    <link href="style.css" rel="stylesheet">
+    <title>Zachary's Guestbook - v2</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Guestbook - v2</h1>
+    </div>
+
+    <div id="guestbook-entries">
+      <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+      <p>Waiting for database connection... <i class='em em-boat'></i></p>
+      
+    </div>
+
+    <div>
+      <form id="guestbook-form">
+        <input autocomplete="off" id="guestbook-entry-content" type="text">
+        <a href="#" id="guestbook-submit">Submit</a>
+      </form>
+    </div>
+
+    <div>
+      <p><h2 id="guestbook-host-address"></h2></p>
+      <p><a href="env">/env</a>
+      <a href="info">/info</a></p>
+    </div>
+    <script src="jquery.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+kubectl run -i --tty load-generator --rm --image=busybox:1.36.0 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- https://zachary007-3000.theiaopenshiftnext-0-labs-prod-theiaopenshift-4-tor01.proxy.cognitiveclass.ai/; done"
+
+theia@theiaopenshift-zachary007:/home/project/guestbook/v1/guestbook$ kubectl get hpa guestbook --watch
+NAME        REFERENCE              TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+guestbook   Deployment/guestbook   cpu: 20%/5%   1         10        2          3m34s
+guestbook   Deployment/guestbook   cpu: 20%/5%   1         10        4          3m46s
+guestbook   Deployment/guestbook   cpu: 10%/5%   1         10        4          4m2s
+guestbook   Deployment/guestbook   cpu: 6%/5%    1         10        4          4m17s
